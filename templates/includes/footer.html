@@ -1,0 +1,109 @@
+{% load home %}
+{% base_settings as object %}
+{% contact as contact %}
+
+<footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about">
+                <a href="/" class="logo d-flex align-items-center">
+                    <span class="sitename">{{ object.name.title }}</span>
+                </a>
+                <div class="footer-contact pt-3">
+                    <p>{{ contact.address }}</p>
+                    <p class="mt-3"><strong>Telefon:</strong> <span>{{ contact.phone }}</span></p>
+                    <p><strong>Email:</strong> <span>{{ contact.email }}</span></p>
+                </div>
+                <div class="social-links d-flex mt-4">
+                    {% if object.social_networks %}
+                        {% for social in object.social_networks.all %}
+                            <a href="{{ social.url }}"><i class="bi bi-{{ social.name }}"></i></a>
+                        {% endfor %}
+                    {% else %}
+                        <a href=""><i class="bi bi-twitter-x"></i></a>
+                        <a href=""><i class="bi bi-facebook"></i></a>
+                        <a href=""><i class="bi bi-instagram"></i></a>
+                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>Faydalı Linkler</h4>
+                <ul>
+                    <li><a href="/">Anasayfa</a></li>
+                    <li><a href="/#about">Hakkımızda</a></li>
+                    <li><a href="/#services">Hizmetlerimiz</a></li>
+                    <li><a href="#">Kullanım Koşul ve Şartları</a></li>
+                    <li><a href="#">Gizlilik Politikası</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>Hizmetlerimiz</h4>
+                <ul>
+                    {% if object.services %}
+                        {% for service in object.services.all %}
+                            <li><a href="{% url 'base:service_detail' service.slug %}">{{ service.title }}</a></li>
+                        {% endfor %}
+                    {% else %}
+                        <li><a href="#">Web Design</a></li>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Product Management</a></li>
+                        <li><a href="#">Marketing</a></li>
+                        <li><a href="#">Graphic Design</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="col-lg-4 col-md-12 footer-newsletter">
+                <h4>Abonelik</h4>
+                <p>Bültenimize abone olun ve ürünlerimiz ve hizmetlerimizle ilgili en son haberleri alın!</p>
+                <form action="{% url 'base:subscriber' %}" method="post" class="php-email-form" id='subscribeForm'>
+                    {% csrf_token %}
+                    <div class="newsletter-form">
+                        <input type="email" name="email" id="email" placeholder="Email" autocomplete="on"
+                               value="{{ request.POST.email }}">
+                        <input type="submit" value="Abone ol">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>One fine body&hellip;</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+        </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">{{ object.name.title }}</strong> <span>All Rights Reserved</span>
+        </p>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you've purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a
+                href="https://themewagon.com">ThemeWagon</a>
+        </div>
+    </div>
+
+</footer>
+

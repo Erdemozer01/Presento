@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load django_bootstrap5 %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% bootstrap_setting "color_mode" as COLOR_MODE %}
+{% bootstrap_setting "javascript_in_head" as BOOTSTRAP_JAVASCRIPT_IN_HEAD %}
+<html lang="{{ LANGUAGE_CODE|default:'en_us' }}"{% if COLOR_MODE %} data-bs-theme="{{ COLOR_MODE }}"{% endif %}>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    {% include 'includes/meta.html' %}
+
+    {% block meta_tags %}{% endblock %}
+
+    {% include 'includes/favicon.html' %}
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+
+    {% include 'includes/css.html' %}
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+<body class="index-page">
+
+{% include 'includes/navbar.html' %}
+
+<main class="main">
+
+    {% block breadcrumbs %}{% endblock %}
+
+    {% block content %}{% endblock %}
+
+</main>
+
+{% include 'includes/footer.html' %}
+
+<!-- Scroll Top -->
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+{% include 'includes/js.html' %}
+
+{% block scripts %}{% endblock %}
+
+</body>
+
+</html>

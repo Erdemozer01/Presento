@@ -1,0 +1,58 @@
+{% load home %}
+{% hero_list as object_list %}
+
+{% if object_list %}
+    {% for obj in object_list %}
+        <!-- Hero Section -->
+        <section id="hero" class="hero section rounded">
+
+            <img src="{{ obj.image.url }}" alt="{{ obj.title }}" data-aos="fade-in">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h2 data-aos="fade-up" data-aos-delay="100">{{ obj.title }}</h2>
+                        <p data-aos="fade-up" data-aos-delay="200">
+                            {{ obj.content|safe }}
+                        </p>
+                        <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+                            <a href="/#about" class="btn-get-started">Hakkımızda</a>
+                            <a href="{{ obj.video }}" class="glightbox btn-watch-video d-flex align-items-center" data-aos="fade-up" data-aos-delay="400">
+                                <i class="bi bi-play-circle"></i>
+                                <span>Videoyu İzle</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section><!-- /Hero Section -->
+    {% endfor %}
+{% else %}
+    <!-- Hero Section -->
+    <section id="hero" class="hero section rounded">
+
+        <img src="/static/assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 data-aos="fade-up" data-aos-delay="100">Bettter digital experience with Presento</h2>
+                    <p data-aos="fade-up" data-aos-delay="200">We are team of talented designers making websites with
+                        Bootstrap</p>
+                    <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+                        <a href="#about" class="btn-get-started">Get Started</a>
+                        <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
+                           class="glightbox btn-watch-video d-flex align-items-center"><i
+                                class="bi bi-play-circle"></i><span>Watch Video</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section><!-- /Hero Section -->
+{% endif %}
+
+

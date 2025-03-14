@@ -1,0 +1,87 @@
+{% load home categories breadcrumbs %}
+{% base_settings as object %}
+{% categories_list as categories_list %}
+
+<header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+        <a href="/" class="logo d-flex align-items-center me-auto">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <img src="/static/assets/img/logo.png" alt="">
+            <h1 class="sitename">{{ object.name.title }}</h1>
+            {% if request.path == '/' %}
+                <span>.</span>
+            {% endif %}
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+
+            <ul>
+
+                <li><a href="/" {% if request.path == '/' %}class="active"{% endif %}>Anasayfa<br></a></li>
+
+                <li><a href="{% url 'post:portfolio' %}" {% if 'portfolio' in request.path %}class="active"{% endif %}>Portfolio</a></li>
+
+                <li><a href="{% url 'base:pricing' %}" {% if 'pricing' in request.path %}class="active"{% endif %}>Ödeme</a></li>
+
+                <li><a href="{% url 'post:blog' %}" {% if 'blog' in request.path %}class="active"{% endif %}>Blog</a></li>
+
+                {% if 'blog' in request.path %}
+                    <li class="dropdown">
+                        <a href="#"><span>Kategoriler</span>
+                            <i class="bi bi-chevron-down toggle-dropdown"></i>
+                        </a>
+                        <ul>
+                            {% for category in categories_list %}
+                                <li>
+                                    <a href="{% url 'post:category_list' category.title %}">{{ category.title.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#"><span>Diğer</span>
+                            <i class="bi bi-chevron-down toggle-dropdown"></i>
+                        </a>
+                        <ul>
+                            <li><a href="/#about">Hakkımızda</a></li>
+                            <li><a href="/#services">Hizmetlerimiz</a></li>
+                            <li><a href="/#team">Ekibimiz</a></li>
+                            <li><a href="/#faq">Sıkça Sorulan Sorular</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="dropdown">
+                        <a href="#"><span>Diğer</span>
+                            <i class="bi bi-chevron-down toggle-dropdown"></i>
+                        </a>
+                        <ul>
+                            <li><a href="/#about">Hakkımızda</a></li>
+                            <li><a href="/#services">Hizmetlerimiz</a></li>
+                            <li><a href="/#team">Ekibimiz</a></li>
+                            <li><a href="/#faq">Sıkça Sorulan Sorular</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+
+                <li><a href="{% url 'base:contact' %}" {% if 'iletisim' in request.path %}class="active"{% endif %}>İletişim</a></li>
+
+            </ul>
+
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
+        </nav>
+
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_superuser %}
+                <a class="btn-getstarted" href="{% url 'admin:index' %}">
+                    <i class="bi bi-person-circle" style="margin-right: 5px;"></i>
+                    Admin
+                </a>
+            {% endif %}
+        {% else %}
+            <a class="btn-getstarted" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right" style="margin-right: 5px;"></i>Giriş</a>
+        {% endif %}
+
+    </div>
+</header>

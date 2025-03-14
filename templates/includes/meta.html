@@ -1,0 +1,32 @@
+{% load home %}
+{% meta_tags as meta_list %}
+
+{% if meta_list %}
+    {% for meta in meta_list %}
+        <!-- {{ meta.tag }} tags -->
+        <meta name="{{ meta.name }}" content="{{ meta.content }}">
+    {% endfor %}
+{% else %}
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <link rel="canonical" href="https://orneksite.com/ana-icerik"/>
+
+
+    <meta property="og:url" content="{{ pageUrl }}">
+    <meta property="og:image" content="{{ imageUrl }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:title" content="{{ pageTitle }}">
+    <meta property="og:site_name" content="{{ siteTitle }}">
+    <meta property="og:see_also" content="{{ homepageUrl }}">
+
+    <meta itemprop="name" content="{{ pageTitle }}">
+    <meta itemprop="description" content="{{ description }}">
+    <meta itemprop="image" content="{{ imageUrl }}">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="{{ pageUrl }}">
+    <meta name="twitter:title" content="{{ pageTitle }}">
+    <meta name="twitter:description" content="{{ description }}">
+    <meta name="twitter:image" content="{{ imageUrl }}">
+{% endif %}

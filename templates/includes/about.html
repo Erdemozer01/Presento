@@ -1,0 +1,307 @@
+{% load home %}
+{% about as object_list %}
+{% about_category as category_list %}
+
+{% if object_list %}
+
+    <!-- About Section -->
+    <section id="about" class="about section section-bg dark-background">
+
+        <div class="container position-relative">
+
+            <div class="row gy-5">
+
+                <div class="content col-xl-5 d-flex flex-column" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Voluptatem dignissimos provident quasi</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut
+                        labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                    </p>
+                    {% if not 'hakkımızda' in request.path %}
+                        <a href="#" class="about-btn align-self-center align-self-xl-start">
+                            <span>Hakkımızda</span>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="col-xl-7" data-aos="fade-up" data-aos-delay="200">
+                    <div class="row gy-4">
+                        {% for category in category_list %}
+                            <div class="col-md-6 icon-box position-relative">
+                                <i class="bi bi-{{ category.icon }}"></i>
+                                <h4><a href="" class="stretched-link">{{ category.title }}</a></h4>
+                            </div><!-- Icon-Box -->
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Tabs Section -->
+    <section id="tabs" class="tabs section">
+
+        <div class="container">
+
+            <ul class="nav nav-tabs row d-flex" data-aos="fade-up" data-aos-delay="100">
+                {% for category in category_list %}
+                    {% if forloop.counter < 5 %}
+                        <li class="nav-item col-3">
+                            <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab"
+                               data-bs-target="#tabs-tab-{{ forloop.counter }}">
+                                <i class="bi bi-{{ category.icon|lower }}"></i>
+                                <h4 class="d-none d-lg-block">{{ category.title }}</h4>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul><!-- End Tab Nav -->
+
+            <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+                {% for object in object_list %}
+                    {% if forloop.counter < 5 %}
+                        <div class="tab-pane fade {% if forloop.first %}active show{% endif %}"
+                             id="tabs-tab-{{ forloop.counter }}">
+                            <div class="row">
+                                <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
+                                    {{ object.content|safe }}
+                                </div>
+                                <div class="col-lg-6 order-1 order-lg-2 text-center">
+                                    <img src="{{ object.image.url }}" alt="" class="glightbox img-fluid rounded">
+                                </div>
+                            </div>
+                        </div><!-- End Tab Content Item -->
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section><!-- /Tabs Section -->
+
+{% else %}
+
+    <!-- About Section -->
+    <section id="about" class="about section section-bg dark-background">
+
+        <div class="container position-relative">
+
+            <div class="row gy-5">
+
+                <div class="content col-xl-5 d-flex flex-column" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Voluptatem dignissimos provident quasi</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                    </p>
+                    <a href="#" class="about-btn align-self-center align-self-xl-start"><span>About us</span> <i
+                            class="bi bi-chevron-right"></i></a>
+                </div>
+
+                <div class="col-xl-7" data-aos="fade-up" data-aos-delay="200">
+                    <div class="row gy-4">
+
+                        <div class="col-md-6 icon-box position-relative">
+                            <i class="bi bi-briefcase"></i>
+                            <h4><a href="" class="stretched-link">Corporis voluptates sit</a></h4>
+                            <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+                        </div><!-- Icon-Box -->
+
+                        <div class="col-md-6 icon-box position-relative">
+                            <i class="bi bi-gem"></i>
+                            <h4><a href="" class="stretched-link">Ullamco laboris nisi</a></h4>
+                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+                        </div><!-- Icon-Box -->
+
+                        <div class="col-md-6 icon-box position-relative">
+                            <i class="bi bi-broadcast"></i>
+                            <h4><a href="" class="stretched-link">Labore consequatur</a></h4>
+                            <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
+                        </div><!-- Icon-Box -->
+
+                        <div class="col-md-6 icon-box position-relative">
+                            <i class="bi bi-easel"></i>
+                            <h4><a href="" class="stretched-link">Beatae veritatis</a></h4>
+                            <p>Expedita veritatis consequuntur nihil tempore laudantium vitae denat pacta</p>
+                        </div><!-- Icon-Box -->
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Tabs Section -->
+    <section id="tabs" class="tabs section">
+
+        <div class="container">
+
+            <ul class="nav nav-tabs row  d-flex" data-aos="fade-up" data-aos-delay="100">
+                <li class="nav-item col-3">
+                    <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tabs-tab-1">
+                        <i class="bi bi-binoculars"></i>
+                        <h4 class="d-none d-lg-block">Modi sit est dela pireda nest</h4>
+                    </a>
+                </li>
+                <li class="nav-item col-3">
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs-tab-2">
+                        <i class="bi bi-box-seam"></i>
+                        <h4 class="d-none d-lg-block">Unde praesenti mara setra le</h4>
+                    </a>
+                </li>
+                <li class="nav-item col-3">
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs-tab-3">
+                        <i class="bi bi-brightness-high"></i>
+                        <h4 class="d-none d-lg-block">Pariatur explica nitro dela</h4>
+                    </a>
+                </li>
+                <li class="nav-item col-3">
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs-tab-4">
+                        <i class="bi bi-command"></i>
+                        <h4 class="d-none d-lg-block">Nostrum qui dile node</h4>
+                    </a>
+                </li>
+            </ul><!-- End Tab Nav -->
+
+            <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+
+                <div class="tab-pane fade active show" id="tabs-tab-1">
+                    <div class="row">
+                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
+                            <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+                            <p class="fst-italic">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore
+                                magna aliqua.
+                            </p>
+                            <ul>
+                                <li><i class="bi bi-check2-all"></i>
+                                    <spab>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</spab>
+                                </li>
+                                <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit</span>.
+                                </li>
+                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span>
+                                </li>
+                            </ul>
+                            <p>
+                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                reprehenderit in voluptate
+                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                                proident, sunt in
+                                culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                        </div>
+                        <div class="col-lg-6 order-1 order-lg-2 text-center">
+                            <img src="/static/assets/img/working-1.jpg" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div><!-- End Tab Content Item -->
+
+                <div class="tab-pane fade" id="tabs-tab-2">
+                    <div class="row">
+                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
+                            <h3>Neque exercitationem debitis soluta quos debitis quo mollitia officia est</h3>
+                            <p>
+                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                reprehenderit in voluptate
+                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                                proident, sunt in
+                                culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                            <p class="fst-italic">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore
+                                magna aliqua.
+                            </p>
+                            <ul>
+                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
+                                </li>
+                                <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span>
+                                </li>
+                                <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span>
+                                </li>
+                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 order-1 order-lg-2 text-center">
+                            <img src="/static/assets/img/working-2.jpg" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div><!-- End Tab Content Item -->
+
+                <div class="tab-pane fade" id="tabs-tab-3">
+                    <div class="row">
+                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
+                            <h3>Voluptatibus commodi ut accusamus ea repudiandae ut autem dolor ut assumenda</h3>
+                            <p>
+                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                reprehenderit in voluptate
+                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                                proident, sunt in
+                                culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                            <ul>
+                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
+                                </li>
+                                <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span>
+                                </li>
+                                <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span>
+                                </li>
+                            </ul>
+                            <p class="fst-italic">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore
+                                magna aliqua.
+                            </p>
+                        </div>
+                        <div class="col-lg-6 order-1 order-lg-2 text-center">
+                            <img src="/static/assets/img/working-3.jpg" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div><!-- End Tab Content Item -->
+
+                <div class="tab-pane fade" id="tabs-tab-4">
+                    <div class="row">
+                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
+                            <h3>Omnis fugiat ea explicabo sunt dolorum asperiores sequi inventore rerum</h3>
+                            <p>
+                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                reprehenderit in voluptate
+                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                                proident, sunt in
+                                culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                            <p class="fst-italic">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore
+                                magna aliqua.
+                            </p>
+                            <ul>
+                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
+                                </li>
+                                <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span>
+                                </li>
+                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 order-1 order-lg-2 text-center">
+                            <img src="/static/assets/img/working-4.jpg" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div><!-- End Tab Content Item -->
+
+            </div>
+
+        </div>
+
+    </section><!-- /Tabs Section -->
+
+{% endif %}
+

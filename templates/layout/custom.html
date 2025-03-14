@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+
+{% block breadcrumbs %}
+    {% include 'includes/breadcrumbs.html' %}
+{% endblock %}
+
+
+
+{% block content %}
+
+    <!-- Starter Section Section -->
+    <section id="starter-section" class="starter-section section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>{% block custom_title %}{% endblock %}</h2>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up">
+
+            {% block custom_content %}{% endblock %}
+
+        </div>
+
+    </section><!-- /Starter Section Section -->
+
+{% endblock %}

@@ -1,0 +1,62 @@
+<!-- Blog Pagination Section -->
+<section id="blog-pagination" class="blog-pagination section">
+
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <ul>
+                {% if page_obj.has_previous %}
+                    <li>
+                        <a class="page-link" aria-label="ilk sayfa" title="ilk sayfa"
+                           href="?page=1">
+                            <span class="bi bi-chevron-double-left"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="page-link rounded" aria-label="önceki sayfa"
+                           title="önceki sayfa"
+                           href="?page={{ page_obj.previous_page_number }}">
+                            <span class="bi bi-chevron-left"></span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for number in page_obj.paginator.page_range %}
+                    {% if page_obj.number == number %}
+                        <li class="page-item active">
+                            <a class="page-link active" href="#">{{ number }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ number }}">{{ number }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link rounded" aria-label="first link"
+                           title="sonraki sayfa"
+                           href="?page={{ page_obj.next_page_number }}">
+                            <span class="bi bi-chevron-right"></span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" aria-label="first link" title="son sayfa"
+                           href="?page={{ page_obj.paginator.num_pages }}">
+                            <span class="bi bi-chevron-double-right"></span>
+                        </a>
+                    </li>
+
+                {% else %}
+
+                    <li class="page-item">
+                        <a class="page-link" aria-label="first link"
+                           href="#">
+                            <span class="bi bi-chevron-double-right"></span>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+
+</section><!-- /Blog Pagination Section -->

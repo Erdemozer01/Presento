@@ -1,0 +1,279 @@
+{% extends 'layout/base.html' %}
+{% load thumbnail hitcount_tags %}
+
+{% block meta_tags %}
+    <link rel="shortcut icon" href="{{ object.cover.url }}" type="image/x-icon">
+    <meta name="description" content="{{ object.title }}">
+    <meta name="keywords" content="{{ object.slug }}, {{ object.title }}, {{ object.category }}">
+    <meta name="author" content="{{ object.author }}">
+    <meta property="og:title" content="{{ object.title }}">
+    <meta property="og:description" content="{{ object.title }}">
+    <meta property="og:image" content="{{ object.cover.url }}">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+    <meta property="og:url" content="{% url 'post:blog_details' object.category.title|slugify object.slug %}">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="{{ object.cover.url }}">
+{% endblock %}
+
+{% block title %}Makale | {{ object.title }}{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-8">
+                {% include 'includes/message.html' %}
+                <!-- Blog Details Section -->
+                <section id="blog-details" class="blog-details section">
+                    <div class="container">
+
+                        <article class="article">
+                            {% if request.user == object.author %}
+                                <li class="d-flex align-items-center float-end" title="Düzenle">
+                                    <a href="{% url 'admin:index' %}post/articlemodel/{{ object.pk }}/change/">
+                                        <i class="bi bi-pen text-primary"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <a href="{{ object.cover.url }}" title="{{ object.title }}"
+                               data-gallery="identifier" class="text-decoration-none">
+                                {% thumbnail object.cover "1920x1080" padding=True quality=100 crop="center" as im %}
+                                    <img src="{{ im.url }}" class="glightbox card-img-top rounded"
+                                         alt="{{ object.title }}">
+                                {% endthumbnail %}
+                            </a>
+                            <h2 class="title">{{ object.title }}</h2>
+
+                            <div class="meta-top">
+                                <ul>
+
+                                    <li class="d-flex align-items-center">
+                                        <i class="bi bi-folder"></i>
+                                        <a href="{% url 'post:category_list' object.category.title %}">{{ object.category.title.title }}</a>
+                                    </li>
+
+                                    <li class="d-flex align-items-center">
+                                        <i class="bi bi-clock"></i>
+                                        <a href="{% url 'post:mount_list' object.created_at.year object.created_at.month %}">
+                                            <time datetime="{{ object.created_at.date }}">{{ object.created_at.date }}</time>
+                                        </a>
+                                    </li>
+
+                                    <li class="d-flex align-items-center">
+                                        <i class="bi bi-chat-dots"></i>
+                                        <a href="#comments">{{ object.comments.count }} Yorum</a>
+                                    </li>
+
+                                </ul>
+
+                            </div><!-- End meta top -->
+
+                            <div class="content" id="printableArea">
+                                {{ object.content|safe }}
+                            </div><!-- End post content -->
+
+                            <div class="meta-bottom">
+
+                                <ul class="cats">
+
+                                    <li title="Okunma Sayısı">
+                                        <i class="bi bi-eye">{% get_hit_count for object %}</i>
+                                    </li>
+
+
+                                    <li class="btn btn-sm list-unstyled" onclick="printDiv('printableArea')">
+                                        <i class="bi bi-printer">Yazdır</i>
+                                    </li>
+
+
+                                    <li class="social-links float-end">
+                                        <a title="Paylaş"
+                                           href="https://twitter.com/intent/tweet?text={{ request.build_absolute_uri }}"><i
+                                                class="bi bi-twitter-x"></i></a>
+                                        <a title="Paylaş"
+                                           href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"><i
+                                                class="bi bi-facebook"></i></a>
+                                        <a title="Paylaş"
+                                           href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}"><i
+                                                class="bi bi-whatsapp"></i></a>
+                                    </li>
+
+                                </ul>
+
+                            </div><!-- End meta bottom -->
+
+                        </article>
+                    </div>
+
+                </section><!-- /Blog Details Section -->
+
+                <!-- Blog Author Section -->
+                <section id="blog-author" class="blog-author section">
+
+                    <div class="container">
+                        <div class="author-container d-flex align-items-center">
+
+                            <div>
+                                <h4 class="border-bottom fst-italic mb-2">Yazar Hakkında</h4>
+                                <a href="{% url 'post:author_list' object.author %}">
+                                    <h5>{{ object.author.username }}</h5></a>
+                                <p>
+                                    Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus
+                                    accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse
+                                    et accusantium ut unde voluptas.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </section><!-- /Blog Author Section -->
+
+                <!-- Blog Comments Section -->
+                <section id="comments" class="blog-comments section">
+
+                    <div class="container">
+
+                        {% if object.comments.count == 0 %}
+                            <h6 class="comments-count">Gönderiye henüz yorum yapılmamıştır.</h6>
+                        {% else %}
+                            <h4 class="comments-count">{{ object.comments.count }} Yorum</h4>
+                        {% endif %}
+
+                        {% for comment in object.comments.all %}
+                            <div id="comment-{{ forloop.counter }}" class="comment">
+                                <div class="d-flex">
+                                    <div class="comment-img img-thumbnail"></div>
+                                    <div>
+                                        <h5><a href="">{{ comment.author }}</a></h5>
+                                        <time datetime="{{ comment.created_at }}">{{ comment.created_at }}</time>
+                                        <p>
+                                            {{ comment.comment }}
+                                        </p>
+                                        <div class="text-danger justify-content-end fst-italic"><a
+                                                href="{% url 'post:comment_report' comment.pk %}">Yorumu rapor et</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- End comment #1 -->
+                        {% endfor %}
+
+                    </div>
+
+                </section><!-- /Blog Comments Section -->
+
+                <!-- Comment Form Section -->
+                <section id="comment-form" class="comment-form section">
+                    <div class="container">
+
+                        <form method="get">
+
+                            <h4>Yorum</h4>
+                            <p>Email adresiniz paylaşılmayacak</p>
+
+                            <div class="row">
+                                <div class="col form-group">
+                                    <textarea name="comment" class="form-control" placeholder="Yorumunuz*"
+                                              required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Yorum Yap</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </section><!-- /Comment Form Section -->
+
+            </div>
+
+            <div class="col-lg-4 sidebar">
+
+                <div class="widgets-container">
+
+                    <!-- Search Widget -->
+                    <div class="search-widget widget-item d-none d-lg-block">
+
+                        <h3 class="widget-title">Makale Ara</h3>
+                        <form action="{% url 'post:blog' %}" method="get">
+                            <input type="text" placeholder="Kategori veya Başlık" name="ara" id="ara" autocomplete="off"
+                                   value="{{ request.GET.ara }}">
+                            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+                        </form>
+
+                    </div><!--/Search Widget -->
+
+                    <!-- Categories Widget -->
+                    <div class="categories-widget widget-item">
+
+                        <h3 class="widget-title">Kategoriler</h3>
+                        <ul class="mt-3">
+
+                            {% for category in recent_post %}
+                                {% ifchanged %}
+                                    <li>
+                                        <a href="{% url 'post:category_list' category.category.title %}">{{ category.category.title.title }}</a>
+                                    </li>
+                                {% endifchanged %}
+                            {% endfor %}
+                        </ul>
+
+                    </div><!--/Categories Widget -->
+
+                    <!-- Recent Posts Widget -->
+                    <div class="recent-posts-widget widget-item">
+
+                        <h3 class="widget-title border-bottom">Son Gönderiler</h3>
+
+                        {% for post in recent_post %}
+                            <div class="post-item">
+                                <img src="{{ post.cover.url }}" alt="" class="flex-shrink-0">
+                                <div>
+                                    <h4><a href="{% url 'post:blog_details' post.pk post.slug %}">{{ post.title }}</a>
+                                    </h4>
+                                    <time datetime="{{ post.created_at.date }}">{{ post.created_at.date }}</time>
+                                </div>
+                            </div><!-- End recent post item-->
+                        {% endfor %}
+
+                    </div><!--/Recent Posts Widget -->
+
+                    <!-- Tags Widget -->
+                    <div class="tags-widget widget-item">
+
+                        <h3 class="widget-title">Etiketler</h3>
+                        <ul>
+                            {% for tag in object.article_tags.all %}
+                                <li><a href="{% url 'post:tags_list' tag.tags %}">{{ tag.tags.title }}</a></li>
+                            {% endfor %}
+
+                        </ul>
+
+                    </div><!--/Tags Widget -->
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+{% endblock %}

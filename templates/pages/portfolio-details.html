@@ -1,0 +1,101 @@
+{% extends 'layout/base.html' %}
+{% load sorl_thumbnail %}
+
+{% block title %}
+    Ayrıntılar
+{% endblock %}
+
+{% block meta_tags %}
+
+    {% for object in object_list %}
+    	<meta property="og:image" content="{{object.image.url}}" />
+        <meta property="og:title" content="{{object.title|slugify}}" />
+        <meta property="og:url" content="{{object.get_absolute_url}}" />
+        <meta name="description" content="{{object.portfolio.title|slugify}}">
+        <meta property="og:description" content="{{object.portfolio.title|slugify}}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{object.title|slugify}}">
+        <meta name="twitter:description" content="{{object.portfolio.title|slugify}}">
+        <meta name="twitter:image" content="{{object.image.url}}" />
+        <meta name="twitter:image:src" content="{{object.image.url}}" />
+        <meta name="google-site-verification" content="{{ object.title }}" />
+        <meta name="yandex-verification" content="{{ object.title }}" />
+        <meta name="msvalidate.01" content="{{ object.title }}" />
+        <meta name="google" content="notranslate, {{ object.title }}" />
+    {% endfor %}
+
+    <meta name="title" content="Portfolio, {{object.title|slugify}}">
+    <meta name="description" content="Portfolio, portfolio template">
+
+{% endblock %}
+
+
+{% block content %}
+    <!-- Portfolio Details Section -->
+    <section id="portfolio-details" class="portfolio-details section">
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="row gy-4">
+                {% for object in object_list %}
+                    <div class="col-lg-8">
+                        <div class="portfolio-details-slider swiper init-swiper">
+
+                            <script type="application/json" class="swiper-config">
+                                {
+                                  "loop": true,
+                                  "speed": 600,
+                                  "autoplay": {
+                                    "delay": 5000
+                                  },
+                                  "slidesPerView": "auto",
+                                  "pagination": {
+                                    "el": ".swiper-pagination",
+                                    "type": "bullets",
+                                    "clickable": true
+                                  }
+                                }
+                            </script>
+
+                            <div class="swiper-wrapper align-items-center">
+                                <a href="{{ object.image.url }}">
+                                    {% thumbnail object.image "1920x1080" padding=True quality=100 crop="center" as im %}
+                                        <img src="{{ im.url }}" class="glightbox card-img-top rounded"
+                                             alt="{{ object.title }}">
+                                    {% endthumbnail %}
+                                </a>
+
+
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
+                            <h3>{{ object.title }}</h3>
+                            <ul>
+                                <li><strong>Hazırlayan</strong>: {{ object.portfolio.name }}</li>
+                                <li><strong>Kategori</strong>: {{ object.portfolio.category.title }}</li>
+                                <li><strong>Portfolio Adı</strong>: {{ object.portfolio.title }}</li>
+                                <li><strong>Oluşturuldu</strong>: {{ object.portfolio.created }}</li>
+                                <li><strong>Düzenlendi</strong>: {{ object.portfolio.updated }}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
+                            {{ object.content|safe }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </section><!-- /Portfolio Details Section -->
+
+    {% include 'includes/paginator.html' %}
+
+{% endblock %}

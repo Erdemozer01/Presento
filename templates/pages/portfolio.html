@@ -1,0 +1,74 @@
+{% extends 'layout/custom.html' %}
+
+{% block title %} Portfolio {% endblock %}
+
+{% block custom_title %} Portfolio {% endblock %}
+
+{% block meta_tags %}
+    <meta name="title" content="Portfolio">
+    <meta name="description" content="Portfolio, portfolio template">
+    <meta name="keywords" content="portfolio, template">
+    {% for object in object_list %}
+    	<meta property="og:type" content="website">
+        <meta property="og:url" content="{{ object.url }}">
+        <meta property="og:title" content="{{ object.title }}">
+        <meta property="og:description" content="{{ object.description }}">
+        <meta property="og:image" content="{{ object.image.url }}">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="{{ object.url }}">
+        <meta property="twitter:title" content="{{ object.title }}">
+        <meta property="twitter:description" content="{{ object.updated }}, {{ object.portfolio }}">
+        <meta property="twitter:image" content="{{ object.image.url }}">
+    {% endfor %}
+{% endblock %}
+
+{% block custom_content %}
+    <section id="portfolio" class="portfolio section">
+
+        <div class="container">
+
+            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+                <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+
+                    <li data-filter="*" class="filter-active">Tümü</li>
+
+                    {% for obj in portfolio_list %}
+                        <li data-filter=".filter-{% ifchanged %}{{ obj.category }}{% endifchanged %}">
+                            {% ifchanged %}{{ obj.category }}{% endifchanged %}</li>
+                    {% endfor %}
+
+                </ul><!-- End Portfolio Filters -->
+
+                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+                    {% for object in portfolio_list %}
+                        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-{{ object.category }}">
+                            <div class="portfolio-content h-100">
+                                <img src="{{ object.image.url }}" class="img-fluid" alt="">
+                                <div class="portfolio-info">
+
+                                    <h4>{{ object.category.title }}, {{ object.created.date }}</h4>
+                                    <p>{{ object.title }}</p>
+
+                                    <a href="{{ object.image.url }}" title="{{ object.title }}"
+                                       data-gallery="portfolio-gallery-app" class="glightbox preview-link">
+                                        <i class="bi bi-zoom-in"></i></a>
+
+                                    <a href="{% url 'post:portfolio_details' object.pk object.category object.slug %}"
+                                       title="Ayrıntılar" class="details-link">
+                                        <i class="bi bi-link-45deg"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div><!-- End Portfolio Item -->
+                    {% endfor %}
+
+                </div><!-- End Portfolio Container -->
+
+            </div>
+
+        </div>
+
+    </section>
+{% endblock %}
