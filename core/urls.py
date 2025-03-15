@@ -30,6 +30,7 @@ urlpatterns = [
     path(r"images-handler/", include("galleryfield.urls")),
     path('', include('base.urls')),
     path('', include('post.urls')),
+    path('', include('shop.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -43,5 +44,5 @@ try:
     admin.site.site_header = site.name
     admin.site.index_title = site.name
     admin.site.name = site.name
-except Home.DoesNotExist:
+except:
     pass

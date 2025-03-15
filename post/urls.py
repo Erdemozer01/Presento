@@ -4,8 +4,6 @@ from post import views
 app_name = 'post'
 
 urlpatterns = [
-    path('portfolio/', views.PortfolioListView.as_view(), name='portfolio'),
-    path('portfolio/<pk>/<category>/<slug>/', views.PortfolioDetailView.as_view(), name='portfolio_details'),
     path('blog/', views.ArticleListView.as_view(), name='blog'),
     path('blog/<pk>/<slug>/', views.ArticleDetailView.as_view(), name='blog_details'),
     path('blog/<tags>-etiketi/', views.ArticleTagsListView.as_view(), name='tags_list'),

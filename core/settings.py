@@ -35,10 +35,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     ### application ###
     'base.apps.BaseConfig',
     'post.apps.PostConfig',
     'accounts.apps.AccountsConfig',
+    'cart.apps.CartConfig',
+    'shop.apps.ShopConfig',
     ### third part ###
     'django_ckeditor_5',
     'django_bootstrap5',
@@ -506,3 +509,7 @@ DJANGO_GALLERY_FIELD_CONFIG = {
     "widget_hidden_input_css_class": "django-galleryfield",
 
 }
+
+IYZICO_API_KEY = 'YOUR_API_KEY'
+IYZICO_SECRET_KEY = 'YOUR_SECRET_KEY'
+IYZICO_BASE_URL = 'https://api.iyzipay.com'  # or 'https://sandbox-api.iyzipay.com' for sandbox

@@ -20,7 +20,7 @@
 
                 <li><a href="/" {% if request.path == '/' %}class="active"{% endif %}>Anasayfa<br></a></li>
 
-                <li><a href="{% url 'post:portfolio' %}" {% if 'portfolio' in request.path %}class="active"{% endif %}>Portfolio</a></li>
+                <li><a href="{% url 'shop:product_list' %}" {% if 'urunler' in request.path %}class="active"{% endif %}>Ürünler</a></li>
 
                 <li><a href="{% url 'base:pricing' %}" {% if 'pricing' in request.path %}class="active"{% endif %}>Ödeme</a></li>
 

@@ -5,26 +5,7 @@ from django.views import generic
 from django.contrib import messages
 from hitcount.views import HitCountDetailView
 
-from .models import Portfolio, PortFolioAddContentModel, ArticleModel, ArticleTags, ArticleComment, ArticleCategory
-
-
-class PortfolioListView(generic.ListView):
-    model = Portfolio
-    template_name = 'pages/portfolio.html'
-
-    def get_context_data(self, *, object_list=..., **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['portfolio_detail'] = PortFolioAddContentModel.objects.all()
-        return context
-
-
-class PortfolioDetailView(generic.ListView):
-    model = PortFolioAddContentModel
-    template_name = 'pages/portfolio-details.html'
-    paginate_by = 1
-
-    def get_queryset(self):
-        return PortFolioAddContentModel.objects.filter(portfolio_id=self.kwargs['pk'])
+from .models import ArticleModel, ArticleTags, ArticleComment, ArticleCategory
 
 
 class ArticleCategoryListView(generic.ListView):

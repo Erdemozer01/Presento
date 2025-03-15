@@ -1,8 +1,6 @@
 from django.urls import path
 from accounts import views
 
-
-
 urlpatterns = [
     path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('kayıt-ol', views.RegisterView.as_view(), name='register'),

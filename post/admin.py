@@ -8,7 +8,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template.loader import get_template
 
-from .models.portfolio import Portfolio, PortFolioAddContentModel, PortfolioCategory
+from shop.models import Product, ProductCategory
 from .models.article import ArticleModel, ArticleTags, ArticleComment, ArticleCategory
 from .models import NewsLetterModel
 from django.conf import settings
@@ -95,31 +95,6 @@ class NewsLetterModelAdmin(admin.ModelAdmin):
             connection.close()  # Bağlantıyı kapatmak önemli!
         except Exception as e:
             messages.error(request, f"SMTP bağlantısı kapatılamadı: {e}")
-
-
-@admin.register(PortfolioCategory)
-class PortfolioAdmin(admin.ModelAdmin):
-    list_display = ('user', 'title',)
-
-    def has_module_permission(self, request):
-        return False
-
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user
-        obj.save()
-        return super().save_model(request, obj, form, change)
-
-
-class PortFolioAddContentModelAdmin(admin.StackedInline):
-    model = PortFolioAddContentModel
-    extra = 0
-    classes = ['collapse']
-
-
-@admin.register(Portfolio)
-class PortfolioModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'title', 'created')
-    inlines = [PortFolioAddContentModelAdmin]
 
 
 class ArticleTagsAdmin(admin.StackedInline):
